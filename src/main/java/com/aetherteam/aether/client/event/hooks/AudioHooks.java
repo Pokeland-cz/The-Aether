@@ -94,7 +94,7 @@ public class AudioHooks {
      * @see com.aetherteam.aether.client.event.listeners.AudioListener#onClientTick(ClientTickEvent.Post)
      */
     public static void tick() {
-        if (!AetherConfig.CLIENT.disable_music_manager.get() && !Minecraft.getInstance().isPaused()) {
+        if (!Minecraft.getInstance().isPaused() && Minecraft.getInstance().level != null && !AetherConfig.CLIENT.disable_music_manager.get()) {
             AetherMusicManager.tick();
         }
     }
