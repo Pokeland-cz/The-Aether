@@ -34,6 +34,7 @@ import net.minecraft.world.entity.Saddleable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
@@ -101,6 +102,9 @@ public class EntityMixin implements EntityExtension {
     private static Entity entityFell(Entity entity) {
         Level serverLevel = entity.level();
         MinecraftServer minecraftserver = serverLevel.getServer();
+        if (entity instanceof AbstractArrow) {
+            return null;
+        }
         if (minecraftserver != null) {
             ServerLevel destination = minecraftserver.getLevel(LevelUtil.returnDimension());
             if (destination != null && LevelUtil.returnDimension() != LevelUtil.destinationDimension()) {
