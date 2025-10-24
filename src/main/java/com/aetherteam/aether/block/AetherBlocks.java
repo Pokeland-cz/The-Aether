@@ -106,8 +106,8 @@ public class AetherBlocks {
     public static final DeferredBlock<FlowerPotBlock> POTTED_BERRY_BUSH = BLOCKS.register("potted_berry_bush", () -> new FlowerPotBlock(BERRY_BUSH.get(), Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
     public static final DeferredBlock<FlowerPotBlock> POTTED_BERRY_BUSH_STEM = BLOCKS.register("potted_berry_bush_stem", () -> new FlowerPotBlock(BERRY_BUSH_STEM.get(), Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
 
-    public static final DeferredBlock<Block> PURPLE_FLOWER = register("purple_flower", () -> new FlowerBlock(AetherEffects.INEBRIATION, 12, Block.Properties.ofFullCopy(Blocks.DANDELION)));
-    public static final DeferredBlock<Block> WHITE_FLOWER = register("white_flower", () -> new FlowerBlock(MobEffects.SLOW_FALLING, 4, Block.Properties.ofFullCopy(Blocks.DANDELION)));
+    public static final DeferredBlock<Block> PURPLE_FLOWER = register("purple_flower", () -> new AetherFlowerBlock(AetherEffects.INEBRIATION, 12, Block.Properties.ofFullCopy(Blocks.DANDELION)));
+    public static final DeferredBlock<Block> WHITE_FLOWER = register("white_flower", () -> new AetherFlowerBlock(MobEffects.SLOW_FALLING, 4, Block.Properties.ofFullCopy(Blocks.DANDELION)));
     public static final DeferredBlock<FlowerPotBlock> POTTED_PURPLE_FLOWER = BLOCKS.register("potted_purple_flower", () -> new FlowerPotBlock(PURPLE_FLOWER.get(), Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
     public static final DeferredBlock<FlowerPotBlock> POTTED_WHITE_FLOWER = BLOCKS.register("potted_white_flower", () -> new FlowerPotBlock(WHITE_FLOWER.get(), Block.Properties.ofFullCopy(Blocks.FLOWER_POT)));
 
@@ -310,6 +310,8 @@ public class AetherBlocks {
                 return new EntityBlockItem(block.get(), ChestMimicBlockEntity::new, new Item.Properties());
             } else if (block == TREASURE_CHEST) {
                 return new EntityBlockItem(block.get(), TreasureChestBlockEntity::new, new Item.Properties());
+            } else if (block == SKYROOT_DOOR) {
+                return new DoubleHighBlockItem(block.get(), new Item.Properties());
             } else if (block == SUN_ALTAR) {
                 return new BlockItem(block.get(), new Item.Properties().fireResistant());
             } else if (block == SKYROOT_BED) {

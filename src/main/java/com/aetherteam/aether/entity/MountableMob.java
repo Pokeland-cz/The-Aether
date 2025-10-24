@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.Swim;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
@@ -34,9 +35,7 @@ public interface MountableMob {
      */
     default void riderTick(Mob vehicle) {
         if (vehicle.getControllingPassenger() instanceof Player player) {
-            if (player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).isJumping() && !this.isMountJumping()) {
-                this.setPlayerJumped(true);
-            }
+            this.setPlayerJumped(player.getAttachedOrCreate(AetherDataAttachments.AETHER_PLAYER).isJumping());
         }
     }
 
@@ -97,6 +96,10 @@ public interface MountableMob {
                         vehicle.push(0.0, 0.1 * (jumpBoost.getAmplifier() + 1), 0.0);
                     }
                 }
+                vehicle.hasImpulse = true;
+                vehicle.onJump(vehicle);
+            } else if (vehicle.getPlayerJumped() && vehicle.isMountJumping() && vehicle.canJump() && Swim.shouldSwim(vehicle)) {
+                vehicle.setDeltaMovement(vehicle.getDeltaMovement().add(0.0F, 0.04F, 0.0F));
                 vehicle.hasImpulse = true;
                 vehicle.onJump(vehicle);
             }

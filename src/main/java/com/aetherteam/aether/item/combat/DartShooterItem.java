@@ -181,7 +181,7 @@ public class DartShooterItem extends ProjectileWeaponItem implements FabricItem 
 
     @Override
     public boolean canBeEnchantedWith(ItemStack stack, Holder<Enchantment> enchantment, EnchantingContext context) {
-        return ImmutableSet.of(Enchantments.POWER, Enchantments.PUNCH).contains(enchantment.aetherFabric$getKey());
+        return super.canBeEnchantedWith(stack, enchantment, context) && !enchantment.is(Enchantments.FLAME) && !enchantment.is(Enchantments.INFINITY);
     }
 
     /**

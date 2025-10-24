@@ -391,11 +391,18 @@ public class Aerbunny extends AetherAnimal {
     }
 
     /**
-     * @return The offset {@link Double} for an Aerbunny when riding another entity.
+     * @return The offset {@link Vec3} for an Aerbunny when riding another entity.
      */
     @Override
-    public Vec3 getPassengerRidingPosition(Entity entity) {
-        return super.getPassengerRidingPosition(entity).add(0.0F, 0.125F, 0.0F);
+    public Vec3 getVehicleAttachmentPoint(Entity entity) {
+        Vec3 attachmentPoint = super.getVehicleAttachmentPoint(entity);
+        Entity vehicle = entity.getVehicle();
+        if (entity.getPose() != Pose.CROUCHING) {
+            attachmentPoint = attachmentPoint.subtract(0.0F, 0.05F, 0.0F);
+        } else if (vehicle != null) {
+            attachmentPoint = attachmentPoint.subtract(0.0F, 0.35F, 0.0F);
+        }
+        return attachmentPoint;
     }
 
     /**
@@ -427,6 +434,13 @@ public class Aerbunny extends AetherAnimal {
     @Override
     public boolean isInWall() {
         return !this.isPassenger() && super.isInWall();
+    }
+
+    @Override
+    public void checkDespawn() {
+        if (this.getVehicle() == null) {
+            super.checkDespawn();
+        }
     }
 
     @Nullable

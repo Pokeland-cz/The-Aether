@@ -14,6 +14,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.world.damagesource.DamageSource;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,6 +36,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerMixin {
     @Shadow
     public abstract void resetAttackStrengthTicker();
+
+    @Shadow
+    protected abstract boolean wantsToStopRiding();
 
     /**
      * Damages gloves only once during a sweeping attack, instead of once for every damaged entity in the attack.
@@ -56,11 +61,22 @@ public abstract class PlayerMixin {
      * @param ci The {@link CallbackInfo} for the void method return.
      */
     @Inject(at = @At(value = "HEAD"), method = "rideTick()V")
-    private void rideTick(CallbackInfo ci) {
+    private void rideTickHead(CallbackInfo ci, @Share("wantsToStopRiding") LocalBooleanRef wantsToStopRiding) {
         Player player = (Player) (Object) this;
+        wantsToStopRiding.set(this.wantsToStopRiding());
         if (!player.level().isClientSide()) {
             if (player.isPassenger() && player.getVehicle() instanceof MountableAnimal mountableAnimal) {
                 mountableAnimal.setPlayerTriedToCrouch(player.isShiftKeyDown());
+            }
+        }
+    }
+
+    @Inject(at = @At(value = "TAIL"), method = "rideTick()V")
+    private void rideTickTail(CallbackInfo ci, @Share("wantsToStopRiding") LocalBooleanRef wantsToStopRiding) {
+        Player player = (Player) (Object) this;
+        if (!player.level().isClientSide() && !player.isShiftKeyDown() && wantsToStopRiding.get()) {
+            if (player.isPassenger() && player.getVehicle() instanceof MountableAnimal) {
+                player.setShiftKeyDown(true);
             }
         }
     }

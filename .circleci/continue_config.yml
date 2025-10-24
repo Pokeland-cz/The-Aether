@@ -6,7 +6,7 @@ orbs:
 parameters:
   artifact-name:
     type: string
-    default: aether-1.21.1-1.5.8-fabric.jar
+    default: aether-1.21.1-1.5.11-fabric.jar
   deploy-branch:
     type: string
     default: 1.21.1-develop-fabric

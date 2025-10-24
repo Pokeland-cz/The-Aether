@@ -1,3 +1,80 @@
+# The Aether - Fabric - 1.21.1-1.5.11
+
+Fixes
+
+- Fix oversight in missing `gems/ambrosium` tag.
+
+# The Aether - Fabric - 1.21.1-1.5.10
+
+Additions
+
+- Added custom recipe book filter icon sprites for the Altar, Freezer, and Incubator.
+- Added a new common config option `"Enables Immersive Portals compatibility"` to toggle compatibility while Immersive Portals is installed.
+- Added new block tags: `ores/ambrosium`, `ores/zanite`, `ores/gravitite`, `storage_blocks/ambrosium`, and `storage_block/zanite`.
+- Added new item tags: `gems/ambrosium`, `ores/ambrosium`, `ores/zanite`, and `ores/gravitite`.
+- Added special dungeon blocks to the `#c:relocation_not_supported` tag.
+- Added Stripped Skyroot Log and Stripped Skyroot Wood to the `#c:stripped_logs` and `#c:stripped_woods` respectively.
+- Added `#aether:phyg_temptation_items`, `#aether:flying_cow_temptation_items`, `#aether:sheepuff_temptation_items`, `#aether:aerbunny_temptation_items`, `#aether:aerbunny_temptation_items`, and `#aether:moa_food_items` to the `#c:animal_foods` item tag.
+- Added Healing Stone to the `#c:foods` item tag.
+- Added Ambrosium Shard to the `#c:gems` item tag.
+- Added Aether Portal Frame to the `#c:hidden_from_recipe_viewers` item tag.
+
+Changes
+
+- Reworked the assets of the Aether's title screen to be higher quality and the code to be more compatible with mods like Essential that add buttons to the screen.
+- Inebriation's movement effects no longer apply to flying players in Creative and Spectator mode.
+
+Fixes
+
+- Fix the Valkyrie Lance accepting Sweeping Edge when it shouldn't.
+- Fix the Cloud Staff not accepting durability-related enchantments.
+- Fix the Dart Shooter not accepting durability-related enchantments and not disallowing Infinity and Flame.
+- Fix Blue Aerclouds not being moveable by Create contraptions.
+- Fix changing the `"Overworld-length Aether time cycle"` and `"Syncs time cycles"` configs not working in-game.
+- Fix a crash when trying to change the color of contributor perks.
+
+# The Aether - Fabric - 1.21.1-1.5.9
+
+Additions
+
+- Added a new tag `pacifies_swets` for accessories that can be worn to pacify Swets, e.g. Swet Cape.
+- Added a new tag `double_drops_override` for modpack makers to give blocks doubled loot drops, independent of whether the block was placed by the player.
+- Update en_ud translation.
+- Update es_es translation.
+- Update es_mx translation.
+- Update fr_fr translation.
+- Update it_it translation.
+- Update ja_jp translation.
+- Update ms_my translation.
+- Update ru_ru translation.
+- Update sk_sk translation.
+- Update sv_se translation.
+- Update uk_ua translation.
+- Update zh_cn translation.
+
+Changes
+
+- The player can now swim in water while riding mounted mobs from the Aether.
+- Inebriation particles now pull from the Purple Dye item texture instead of Red Dye.
+- Improved wording of various entries in the Book of Lore.
+- The `enchanted_grass` block tag is now used instead of the Enchanted Aether Grass Block for grass coloring and the interaction behavior between Foxes and Berry Bushes.
+- Improved compatibility with Just Enough Effect Descriptions (JEED). Items that apply effects are now displayed with descriptions.
+- Updated Cumulus to 2.0.7. This includes various bug fixes and improved compatibility with mods like Essential.
+- Updated Accessories to 1.1.0-beta.48. This includes various bug fixes and solves crashes with using newer versions of owo-lib.
+
+Fixes
+
+- Fix an optimization issue on large servers with too many packets sent between clients.
+- Fix an optimization issue caused by Aechor Plant and Swet spawn condition tests.
+- Fix crop blocks not being plantable on Aether Farmland.
+- Fix some overlays not being hidden by F1.
+- Fix issues with Aerbunnies not properly saving on the player's head and causing desyncs.
+- Fix a rare issue where trying to mount and dismount from any mountable mobs in the mod too quickly would cause a desync.
+- Fix Skyroot Door items not using `DoubleHighBlockItem`.
+- Fix a compatibility crash with the `"Gummy Swets restore health"` config option from being loaded too early.
+- Fix a compatibility crash with the `"Disables Aether music manager"` config option from being loaded too early.
+- Fix a compatibility crash with the tool debuff system crashing for modded entities that didn't have the `attack_damage` attribute.
+
 # The Aether - Fabric - 1.21.1-1.5.8
 
 Changes

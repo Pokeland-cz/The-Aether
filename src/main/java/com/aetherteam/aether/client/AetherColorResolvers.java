@@ -1,5 +1,6 @@
 package com.aetherteam.aether.client;
 
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.block.AetherBlocks;
 import com.aetherteam.aether.item.AetherItems;
 import com.aetherteam.aether.item.miscellaneous.MoaEggItem;
@@ -37,7 +38,7 @@ public class AetherColorResolvers {
                 if (level != null && pos != null) {
                     BlockPos newPos = state.hasProperty(DoublePlantBlock.HALF) ? (state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER ? pos.below() : pos) : pos;
                     BlockPos baseBlock = newPos.below();
-                    if (level.getBlockState(baseBlock).is(AetherBlocks.ENCHANTED_AETHER_GRASS_BLOCK.get())) {
+                    if (level.getBlockState(baseBlock).is(AetherTags.Blocks.ENCHANTED_GRASS)) {
                         return ENCHANTED_GRASS_COLOR;
                     } else if (level.getBlockState(baseBlock).is(AetherBlocks.AETHER_GRASS_BLOCK.get())) {
                         return AETHER_GRASS_COLOR;

@@ -1,6 +1,7 @@
 package com.aetherteam.aether.item;
 
 import com.aetherteam.aether.AetherConfig;
+import com.aetherteam.aether.AetherTags;
 import com.aetherteam.aether.item.accessories.cape.CapeItem;
 import com.aetherteam.aether.item.accessories.gloves.GlovesItem;
 import io.wispforest.accessories.api.AccessoriesCapability;
@@ -82,6 +83,16 @@ public final class EquipmentUtil {
      */
     public static boolean hasFreezingAccessory(LivingEntity entity) {
         return hasAccessory(entity, AetherItems.ICE_PENDANT.get()) || hasAccessory(entity, AetherItems.ICE_RING.get());
+    }
+
+    /**
+     * Checks if an accessory that pacifies Swets exists in an entity's accessory inventory.
+     *
+     * @param entity The {@link LivingEntity} wearer.
+     * @return The result of the check, as a {@link Boolean}.
+     */
+    public static boolean hasSwetPacifyingAccessory(LivingEntity entity) {
+        return findFirstAccessory(entity, stack -> stack.is(AetherTags.Items.PACIFIES_SWETS)).isPresent();
     }
 
     /**

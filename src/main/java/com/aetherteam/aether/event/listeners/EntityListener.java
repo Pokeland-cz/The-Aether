@@ -20,6 +20,7 @@ import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -90,8 +91,10 @@ public class EntityListener {
         Vec3 position;
 
         if (hitResult == null) {
-            AABB aABB = player.getBoundingBox().expandTowards(targetEntity.position()).inflate(1.0);
-            hitResult = ProjectileUtil.getEntityHitResult(player, player.getEyePosition(), targetEntity.position(), aABB, entity -> entity == targetEntity, player.position().distanceTo(targetEntity.position()) + 1);
+            WorldBorder border = player.level().getWorldBorder();
+            AABB bounds = player.getBoundingBox().expandTowards(targetEntity.position()).inflate(1.0);
+            AABB clampedBounds = AABB.encapsulatingFullBlocks(border.clampToBounds(bounds.getMinPosition()), border.clampToBounds(bounds.getMaxPosition()));
+            hitResult = ProjectileUtil.getEntityHitResult(player, player.getEyePosition(), targetEntity.position(), clampedBounds, entity -> entity == targetEntity, player.position().distanceTo(targetEntity.position()) + 1);
         }
 
         if (hitResult != null) {
@@ -159,60 +162,6 @@ public class EntityListener {
 //    public static void onEntitySplit(Mob mob, CancellableCallback callback) {
 //        if (EntityHooks.preventSplit(mob)) {
 //            callback.setCanceled(true);
-//        }
-//    }
-
-//    public static void onLoadPlayerFile(PlayerEvent.LoadFromFile event) {
-//        Player player = event.getEntity();
-//        if (player instanceof ServerPlayer serverPlayer) {
-//            CompoundTag playerTag = serverPlayer.server.getWorldData().getLoadedPlayerTag();
-//            if (playerTag != null) {
-//                CompoundTag capsTag = null;
-//                if (playerTag.contains("ForgeCaps")) {
-//                    capsTag = playerTag.getCompound("ForgeCaps");
-//                } else if (playerTag.contains("neoforge:attachments")) {
-//                    capsTag = playerTag.getCompound("neoforge:attachments");
-//                }
-//                if (capsTag != null && capsTag.contains("curios:inventory")) {
-//                    CompoundTag curiosInventoryTag = capsTag.getCompound("curios:inventory");
-//                    if (curiosInventoryTag.contains("Curios")) {
-//                        Tag curiosTag = curiosInventoryTag.get("Curios");
-//                        if (curiosTag instanceof ListTag curiosListTag) {
-//                            for (Tag tag : curiosListTag) {
-//                                if (tag instanceof CompoundTag compoundTag && compoundTag.contains("StacksHandler") && compoundTag.contains("Identifier")) {
-//                                    CompoundTag stacksHandlerTag = compoundTag.getCompound("StacksHandler");
-//                                    if (stacksHandlerTag.contains("Stacks")) {
-//                                        CompoundTag stacksTag = stacksHandlerTag.getCompound("Stacks");
-//                                        if (stacksTag.contains("Items")) {
-//                                            Tag itemsTag = stacksTag.get("Items");
-//                                            if (itemsTag instanceof ListTag listTag) {
-//                                                for (Tag itemTag : listTag) {
-//                                                    if (itemTag instanceof CompoundTag itemCompoundTag) {
-//                                                        if (itemCompoundTag.contains("id")) {
-//                                                            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemCompoundTag.getString("id")));
-//                                                            if (item != Items.AIR) {
-//                                                                ItemStack stack = new ItemStack(item);
-//                                                                AccessoriesCapability accessories = AccessoriesCapability.get(player);
-//                                                                if (accessories != null) {
-//                                                                    Accessory accessory = AccessoriesAPI.getOrDefaultAccessory(stack);
-//                                                                    Pair<SlotReference, EquipAction> equipReference = accessories.canEquipAccessory(stack, true);
-//                                                                    if (accessory.canEquip(stack, equipReference.first())) {
-//                                                                        equipReference.second().equipStack(stack.copy());
-//                                                                    }
-//                                                                }
-//                                                            }
-//                                                        }
-//                                                    }
-//                                                }
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
 //        }
 //    }
 }

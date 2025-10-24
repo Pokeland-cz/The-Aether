@@ -102,6 +102,7 @@
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
     "client.ClientRecipeBookMixin",
+    "client.CreateWorldScreenMixin",
     "client.ElytraLayerMixin",
     "client.FaviconTextureMixin",
     "client.FogRendererMixin",
@@ -114,6 +115,7 @@
     "client.LightTextureMixin",
     "client.LivingEntityRendererMixin",
     "client.LocalPlayerMixin",
+    "client.LogoRendererMixin",
     "client.MinecraftMixin",
     "client.ModelLayersMixin",
     "client.MouseHandlerMixin",
@@ -123,7 +125,10 @@
     "client.ScreenMixin",
     "client.SmithingScreenMixin",
     "client.SoundEngineMixin",
+    "client.SplashRendererMixin",
     "client.TippableArrowRendererMixin",
+    "client.TitleScreenMixin",
+    "client.accessor.AbstractWidgetAccessor",
     "client.accessor.BlockColorsAccessor",
     "client.accessor.BossHealthOverlayAccessor",
     "client.accessor.ButtonAccessor",
@@ -140,8 +145,7 @@
     "client.accessor.SoundEngineAccessor",
     "client.accessor.TitleScreenAccessor",
     "client.fabric.NetworkRegisterHelperMixin",
-    "client.optifine.BossHealthOverlayMixin",
-    "client.CreateWorldScreenMixin"
+    "client.optifine.BossHealthOverlayMixin"
   ],
   "injectors": {
     "defaultRequire": 1

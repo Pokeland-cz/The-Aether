@@ -227,12 +227,12 @@ public class Aether implements ModInitializer {
         registrar.playToClient(LeavingAetherPacket.TYPE, LeavingAetherPacket.STREAM_CODEC, LeavingAetherPacket::execute);
         registrar.playToClient(MoaInteractPacket.TYPE, MoaInteractPacket.STREAM_CODEC, MoaInteractPacket::execute);
         registrar.playToClient(OpenSunAltarPacket.TYPE, OpenSunAltarPacket.STREAM_CODEC, OpenSunAltarPacket::execute);
+        registrar.playToClient(PortalInteractPacket.TYPE, PortalInteractPacket.STREAM_CODEC, PortalInteractPacket::execute);
         registrar.playToClient(PortalTravelSoundPacket.TYPE, PortalTravelSoundPacket.STREAM_CODEC, PortalTravelSoundPacket::execute);
         registrar.playToClient(QueenDialoguePacket.TYPE, QueenDialoguePacket.STREAM_CODEC, QueenDialoguePacket::execute);
         registrar.playToClient(RegisterMoaSkinsPacket.TYPE, RegisterMoaSkinsPacket.STREAM_CODEC, RegisterMoaSkinsPacket::execute);
         registrar.playToClient(RemountAerbunnyPacket.TYPE, RemountAerbunnyPacket.STREAM_CODEC, RemountAerbunnyPacket::execute);
         registrar.playToClient(SetInvisibilityPacket.TYPE, SetInvisibilityPacket.STREAM_CODEC, SetInvisibilityPacket::execute);
-        registrar.playToClient(SetVehiclePacket.TYPE, SetVehiclePacket.STREAM_CODEC, SetVehiclePacket::execute);
         registrar.playToClient(ToolDebuffPacket.TYPE, ToolDebuffPacket.STREAM_CODEC, ToolDebuffPacket::execute);
         registrar.playToClient(ZephyrSnowballHitPacket.TYPE, ZephyrSnowballHitPacket.STREAM_CODEC, ZephyrSnowballHitPacket::execute);
 
@@ -422,6 +422,26 @@ public class Aether implements ModInitializer {
                             new PackSelectionConfig(false, Pack.Position.TOP, false)
                         )
                     )
+            );
+        }
+    }
+
+    /**
+     * A built-in data pack to set up the compatibility for Immersive Portals.<br><br>
+     * The pack is loaded and automatically applied if Immersive Portals is installed and if the {@link AetherConfig.Common#enable_immersive_portals_compatibility} config is enabled.
+     */
+    private void setupImmersivePortalsPack(AddPackFindersEvent event) {
+        if (event.getPackType() == PackType.SERVER_DATA && FabricLoader.getInstance().isModLoaded("immersive_portals_core") && AetherConfig.COMMON.enable_immersive_portals_compatibility.get()) {
+            Path resourcePath = FabricLoader.getInstance().getModContainer(Aether.MODID).orElseThrow().findPath("packs/imm_ptl_compat").orElseThrow();
+            PackMetadataSection metadata = new PackMetadataSection(Component.translatable("pack.aether.imm_ptl_compat.description"), SharedConstants.getCurrentVersion().getPackVersion(PackType.SERVER_DATA), Optional.empty());
+            event.addRepositorySource((source) ->
+                source.accept(new Pack(
+                        new PackLocationInfo("builtin/aether_imm_ptl_compat", Component.translatable("pack.aether.imm_ptl_compat.title"), PackSource.BUILT_IN, Optional.empty()),
+                        new PathPackResources.PathResourcesSupplier(resourcePath),
+                        new Pack.Metadata(metadata.description(), PackCompatibility.COMPATIBLE, FeatureFlagSet.of(), List.of()/*, true*/),
+                        new PackSelectionConfig(true, Pack.Position.TOP, false)
+                    )
+                )
             );
         }
     }

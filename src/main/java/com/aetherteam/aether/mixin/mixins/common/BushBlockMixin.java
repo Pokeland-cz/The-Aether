@@ -17,9 +17,9 @@ import org.spongepowered.asm.mixin.injection.At;
 public class BushBlockMixin {
 
     @WrapOperation(method = "canSurvive", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/BushBlock;mayPlaceOn(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z"))
-    private boolean aetherFabric$checkCropSurvival(BushBlock instance, BlockState state, BlockGetter level, BlockPos pos, Operation<Boolean> original, @Local(argsOnly = true) BlockPos plantPos) {
+    private boolean aetherFabric$checkCropSurvival(BushBlock instance, BlockState state, BlockGetter level, BlockPos pos, Operation<Boolean> original, @Local(argsOnly = true) BlockPos plantPos, @Local(argsOnly = true) BlockState plantState) {
         if (state.getBlock() instanceof AetherFarmBlock aetherFarmBlock) {
-            var result = aetherFarmBlock.canSustainPlant(state, level, pos, Direction.DOWN, level.getBlockState(plantPos));
+            var result = aetherFarmBlock.canSustainPlant(state, level, pos, Direction.DOWN, plantState);
 
             if (result != TriState.DEFAULT) return result.get();
         }
